@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Surfer BD</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <link href="../static/css/styles.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container">
+
+        <h1>Analyze Dhaka Stock Exchange market data</h1>
+
+        <div class="flex-container">
+          <div class="flex-item">
+              <p class="d-inline lead">Select the stock symbol for the company:</p>
+          </div>
+          <div class="flex-item">
+              <select class="btn btn-lg btn-secondary" id="symbols" name="symbol_list" >
+                <option  value="" selected="selected">{{symbol}}</option>
+                    {% for sym in symbols %}
+                        <option value="{{sym}}">{{sym}}</option>
+                    {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="flex-container">
+            <div class="flex-item">
+                <p class="lead">Select step size in days for aggregated chart:<p/>
+            </div>
+            <div class="flex-item">
+            <select class="btn btn-lg btn-secondary" id="step" name="agg_step" >
+                <option  value="" selected="selected">1D</option>
+                    {% for step in steps %}
+                        <option value="{{step}}">{{step}}</option>
+                    {% endfor %}
+            </select>
+            </div>
+        </div>
+
+
+        <div class="flex-container">
+            <div class="flex-item">
+                <p class="lead">Select number of candles for plotting: <p/>
+            </div>
+            <div class="flex-item">
+            <select class="btn btn-lg btn-secondary " id="days" name="day_count">
+                <option  value="" selected="selected">90</option>
+                    {% for cnt in days %}
+                        <option value="{{cnt}}">{{cnt}}</option>
+                    {% endfor %}
+            </select>
+            </div>
+        </div>
+        <br/>
+
+        <button class="btn btn-lg btn-secondary" onclick="on_select()" n>Update Chart</button>
+
+        <p class="lead text-center">Candlestick Chart for {{symbol}}</p>
+        <img src="data:image/png;base64, {{image}}" alt="Red dot" />
+    </div>
+
+</body>
+
+<!-- Latest jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous">
+</script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous">
+</script>
+
+<script type="text/javascript">
+
+    function on_select(){
+        let dd_sym = document.getElementById('symbols');
+        let cur_loc = location.href.split('/?')[0];
+        let next_sym = cur_loc + "?symbol=" + dd_sym.options[dd_sym.selectedIndex].value;
+        console.log(next_sym);
+        location.replace(next_sym);
+    }
+
+
+</script>
+</html>
